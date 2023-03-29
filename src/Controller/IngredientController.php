@@ -23,8 +23,11 @@ class IngredientController extends AbstractController
      * @return Response
      */
     #[Route('/ingredient', name: 'ingredient.index', methods: ['GET'])]
-    public function index(IngredientRepository $repository, PaginatorInterface $paginator, Request $request): Response
-    {
+    public function index(
+        IngredientRepository $repository, 
+        PaginatorInterface $paginator, 
+        Request $request
+        ): Response {
         $ingredients = $paginator->paginate(
             $repository->findAll(),
             $request->query->getInt('page', 1),
@@ -72,6 +75,14 @@ class IngredientController extends AbstractController
         ]);
     }
 
+    /**
+     * This controller allow us to edit a ingredient
+     *
+     * @param Ingredient $ingredient
+     * @param Request $request
+     * @param EntityManagerInterface $manager
+     * @return Response
+     */
     #[Route('/ingredient/edition/{id}', 'ingredient.edit', methods: ['GET', 'POST'])]
     public function edit(
         Ingredient $ingredient, 
