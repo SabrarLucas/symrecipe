@@ -108,6 +108,13 @@ class RecipeController extends AbstractController
         ]);
     }
 
+    /**
+     * This controller allow us to delete a recipe
+     *
+     * @param EntityManagerInterface $manager
+     * @param Recipe $recipe
+     * @return Response
+     */
     #[Route('/recette/suppression{id}', 'recipe.delete', methods: ['GET'])]
     public function delete(EntityManagerInterface $manager, Recipe $recipe) : Response 
     {
