@@ -13,6 +13,12 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
 {
+    /**
+     * This controller allow us to login
+     *
+     * @param AuthenticationUtils $authenticationUtils
+     * @return Response
+     */
     #[Route('/connexion', name: 'security.login', methods: ['GET', 'POST'])]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
@@ -22,12 +28,24 @@ class SecurityController extends AbstractController
         ]);
     }
 
+    /**
+     * This controller allow us to logout 
+     *
+     * @return void
+     */
     #[Route('/deconnexion', 'security.logout')]
     public function logout()
     {
         //Nothing to do here..
     }
 
+    /**
+     * This controller allow us to register
+     *
+     * @param Request $request
+     * @param EntityManagerInterface $manager
+     * @return Response
+     */
     #[Route('/inscription', 'security.registration', methods: ['GET', 'POST'])]
     public function registration(Request $request, EntityManagerInterface $manager) : Response
     {
