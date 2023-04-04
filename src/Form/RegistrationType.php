@@ -92,8 +92,7 @@ class RegistrationType extends AbstractType
                     'class' => 'btn btn-primary mt-4'
                 ],
                 'label' => 'Inscription'
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
