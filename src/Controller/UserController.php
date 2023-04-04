@@ -62,7 +62,7 @@ class UserController extends AbstractController
     }
 
     #[Route('/utilisateur/edition-mot-de-passe/{id}', 'user.edit.password', methods: ['GET' , 'POST'])]
-    public function editPassword(User $user, Request $request,EntityManagerInterface $manager, UserPasswordHasherInterface $hasher) : Response 
+    public function editPassword(User $user, Request $request, EntityManagerInterface $manager, UserPasswordHasherInterface $hasher) : Response 
     {
         $form = $this->createForm(UserPasswordType::class);
 
@@ -77,13 +77,11 @@ class UserController extends AbstractController
                 );
                 $this->addFlash(
                     'succes',
-                    'Le mot de passe a été modifié. '
+                    'Le mot de passe a été modifié.'
                 );
-                
+
                 $manager->persist($user);
                 $manager->flush();
-
-                
 
                 return $this->redirectToRoute('recipe.index');
             }else {
