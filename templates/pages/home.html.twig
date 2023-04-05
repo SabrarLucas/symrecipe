@@ -12,10 +12,10 @@
             <p>Pour commencer, rendez-vous sur la page d'inscription pour utiliser l'application</p>
             <a class="btn btn-primary btn-lg" href="#" role="button">Inscription</a>
         </div>
-        
+
         <div class="recipes">
             <h2 class="mt-4">Recettes de la commu</h2>
-            <div class="d-flex justify-content-center flex-wrap">
+            <div class="d-flex justify-content-between">
                 {% for recipe in recipes %}
                 <div class="card border-primary mb-3" style="max-width: 20rem;">
                     <div class="card-header">Recette n°{{ recipe.id }}</div>
