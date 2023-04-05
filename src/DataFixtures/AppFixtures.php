@@ -35,7 +35,7 @@ class AppFixtures extends Fixture
                 ->setRoles(['ROLE_USER'])
                 ->setPlainPassword('password');
 
-                $users[] = $user;
+            $users[] = $user;
             $manager->persist($user);
         }
 
