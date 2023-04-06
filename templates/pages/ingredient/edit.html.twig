@@ -1,33 +1,36 @@
 {% extends "base.html.twig" %}
 
+{% block title %}Symrecipe - Modification de l'ingrédient
+{% endblock %}
+
 {% block body %}
     <div class="container">
 
         <h1 class="mt-4">Modification de l'ingrédient</h1>
 
-        {{ form_start(form) }}
+        <form name="ingredient" method="post">
 
-        <div class="form-group">
-            {{ form_label(form.name) }}
-            {{ form_widget(form.name) }}
-            <div class="form-error">
-                {{ form_errors(form.name) }}
+            <div class="form-group">
+                {{ form_label(form.name) }}
+                {{ form_widget(form.name) }}
+                <div class="form-error">
+                    {{ form_errors(form.name) }}
+                </div>
             </div>
-        </div>
 
-        <div class="form-group">
-            {{ form_label(form.price) }}
-            {{ form_widget(form.price) }}
-            <div class="form-error">
-                {{ form_errors(form.price) }}
+            <div class="form-group">
+                {{ form_label(form.price) }}
+                {{ form_widget(form.price) }}
+                <div class="form-error">
+                    {{ form_errors(form.price) }}
+                </div>
             </div>
-        </div>
 
-        <div class="form-group">
-            {{ form_row(form.submit) }}
-        </div>
+            {{ form_row(form._token) }}
 
-        </div>
-        {{ form_end(form) }}
+            <button type="submit" id="ingredient_submit" name="ingredient[submit]" class="btn btn-primary mt-4">Modifier mon ingrédient</button>
+
+            </div>
+        </form>
     </div>
 {% endblock %}
