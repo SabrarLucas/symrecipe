@@ -69,12 +69,47 @@ class RecipeController extends AbstractController
     }
 
     /**
+     * This controller allow us to create new recipe
+     *
+     * @param Request $request
+     * @param EntityManagerInterface $manager
+     * @return Response
+     */
+    #[Route('/recette/creation', 'recipe.new', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_USER')]
+    public function new(Request $request, EntityManagerInterface $manager) : Response
+    {
+        $recipe = new Recipe();
+        $form = $this->createForm(RecipeType:: class, $recipe);
+
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()) {
+            $recipe = $form->getData();
+            $recipe->setUser($this->getUser());
+
+            $manager ->persist($recipe);
+            $manager->flush();
+
+            $this->addFlash(
+                'success',
+                'Votre recette a été créé avec succès !'
+            );
+
+            return $this->redirectToRoute('recipe.index');
+        }
+
+        return $this->render('pages/recipe/new.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
+
+    /**
      * This controller allow us to see a recipe if this one is public
      *
      * @param Recipe $recipe
      * @return Response
      */
-    #[Security("is_granted('ROLE_USER') and recipe.isIsPublic() === true")]
+    #[Security("is_granted('ROLE_USER') and (recipe.isIsPublic() === true || user == recipe.getUser())")]
     #[Route('/recette/{id}', 'recipe.show', methods: ['GET', 'POST'])]
     public function show(Recipe $recipe, Request $request, MarkRepository $markRepository, EntityManagerInterface $manager) : Response 
     {
@@ -114,41 +149,6 @@ class RecipeController extends AbstractController
             'form' => $form->createView()
         ]);
     } 
-
-    /**
-     * This controller allow us to create new recipe
-     *
-     * @param Request $request
-     * @param EntityManagerInterface $manager
-     * @return Response
-     */
-    #[Route('/recette/creation', 'recipe.new', methods: ['GET', 'POST'])]
-    #[IsGranted('ROLE_USER')]
-    public function new(Request $request, EntityManagerInterface $manager) : Response
-    {
-        $recipe = new Recipe();
-        $form = $this->createForm(RecipeType:: class, $recipe);
-
-        $form->handleRequest($request);
-        if($form->isSubmitted() && $form->isValid()) {
-            $recipe = $form->getData();
-            $recipe->setUser($this->getUser());
-
-            $manager ->persist($recipe);
-            $manager->flush();
-
-            $this->addFlash(
-                'success',
-                'Votre recette a été créé avec succès !'
-            );
-
-            return $this->redirectToRoute('recipe.index');
-        }
-
-        return $this->render('pages/recipe/new.html.twig', [
-            'form' => $form->createView()
-        ]);
-    }
 
     /**
      * This controller allow us to edit a recipe
