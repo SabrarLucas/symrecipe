@@ -58,7 +58,7 @@ class RecipeController extends AbstractController
         Request $request) : Response
     {
         $recipes = $paginator->paginate(
-            $repository->findPublicRecipe(0),
+            $repository->findPublicRecipe(100),
             $request->query->getInt('page', 1),
             10
         );
